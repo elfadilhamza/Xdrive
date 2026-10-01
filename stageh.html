@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPRINTER CAR - Location de Voitures</title>
+  <!-- FontAwesome pour les icônes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Fichier CSS -->
+  <link rel="stylesheet" href="stagec.css">
+</head>
+<body>
+
+  <!-- Barre de navigation -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo">SPRINTER <span>CAR</span></a>
+      <ul class="nav-links">
+        <li><a href="#home">Accueil</a></li>
+        <li><a href="#cars">Nos Véhicules</a></li>
+        <li><a href="#about">Pourquoi nous ?</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#cars" class="btn btn-primary">Réserver</a>
+    </div>
+  </nav>
+
+  <!-- Section Principale (Hero) -->
+  <section id="home" class="hero">
+    <div class="container">
+      <h1>Louez le véhicule idéal pour votre trajet</h1>
+      <p>Prix compétitifs, service rapide et une large gamme de véhicules partout au Maroc.</p>
+      
+      <!-- Formulaire de recherche -->
+      <div class="search-box">
+        <div class="form-group">
+          <label>Ville de prise en charge</label>
+          <select id="search-location">
+            <option value="">Toutes les villes</option>
+            <option value="Casablanca">Casablanca</option>
+            <option value="Rabat">Rabat</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Date de prise</label>
+          <input type="date">
+        </div>
+        <div class="form-group">
+          <label>Date de retour</label>
+          <input type="date">
+        </div>
+        <div class="form-group btn-group">
+          <button type="button" onclick="filterCars()" class="btn btn-secondary">
+            <i class="fa-solid fa-magnifying-glass"></i> Rechercher
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Pourquoi nous ? -->
+  <section id="about" class="about-section container">
+    <div class="section-title">
+      <h2>Pourquoi choisir SPRINTER CAR ?</h2>
+      <p>Nous vous offrons la meilleure expérience de location au Maroc</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fa-solid fa-tags feature-icon"></i>
+        <h3>Meilleurs Prix</h3>
+        <p>Des tarifs transparents sans frais cachés adaptés à tous les budgets.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-shield-halved feature-icon"></i>
+        <h3>Assurance Complète</h3>
+        <p>Voyagez en toute sérénité grâce à nos formules d'assurance tous risques.</p>
+      </div>
+      <div class="feature-card">
+        <i class="fa-solid fa-headset feature-icon"></i>
+        <h3>Support 24/7</h3>
+        <p>Notre équipe reste disponible à tout moment pour vous assister en route.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Véhicules -->
+  <section id="cars" class="cars-section container">
+    <div class="section-title">
+      <h2>Flotte de véhicules disponibles</h2>
+      <p>Choisissez le véhicule qui correspond à vos besoins</p>
+      
+      <!-- Boutons de filtrage -->
+      <div class="filter-buttons">
+        <button type="button" onclick="filterCategory('all', event)" class="filter-btn active">Tous</button>
+        <button type="button" onclick="filterCategory('Économique', event)" class="filter-btn">Économique</button>
+        <button type="button" onclick="filterCategory('Familiale', event)" class="filter-btn">Familiale / SUV</button>
+        <button type="button" onclick="filterCategory('Luxe', event)" class="filter-btn">Luxe</button>
+      </div>
+    </div>
+
+    <!-- Grille des voitures -->
+    <div id="cars-container" class="cars-grid">
+      <!-- Les véhicules sont insérés dynamiquement via JavaScript -->
+    </div>
+  </section>
+
+  <!-- Section Contact -->
+  <section id="contact" class="contact-section container">
+    <div class="section-title">
+      <h2>Contactez-nous</h2>
+      <p>Une question ou une demande spécifique ? Écrivez-nous</p>
+    </div>
+    <div class="contact-container">
+      <div class="contact-info">
+        <div>
+          <i class="fa-solid fa-phone"></i>
+          <span>+212 7 07 06 55 45 </span>
+        </div>
+        <div>
+          <i class="fa-solid fa-envelope"></i>
+          <span>Sprinter.loc.car@gmail.com</span>
+        </div>
+        <div>
+          <i class="fa-solid fa-location-dot"></i>
+          <span>SPRINTER CAR ANNABIA SECTEUR 11 RIYAD, RABAT</span>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="event.preventDefault(); alert('Message envoyé avec succès !');">
+        <div class="form-group">
+          <label>Nom complet</label>
+          <input type="text" required placeholder="Votre nom">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" required placeholder="Votre email">
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea rows="4" required placeholder="Votre message..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Fenêtre modale de réservation -->
+  <div id="modal" class="modal-backdrop">
+    <div class="modal-content">
+      <button type="button" onclick="closeModal()" class="close-btn">&times;</button>
+      <h3 id="modal-car-title">Réservation</h3>
+      
+      <form id="booking-form" onsubmit="submitBooking(event)">
+        <div class="form-group">
+          <label>Nom complet</label>
+          <input type="text" id="user-name" required placeholder="Ex : Hamza Elfadil">
+        </div>
+        <div class="form-group">
+          <label>Numéro de téléphone (WhatsApp)</label>
+          <input type="tel" id="user-phone" required placeholder="Ex : 0612345678">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Date de prise</label>
+            <input type="date" id="start-date" required>
+          </div>
+          <div class="form-group">
+            <label>Date de retour</label>
+            <input type="date" id="end-date" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-whatsapp">
+          <i class="fa-brands fa-whatsapp"></i> Confirmer via WhatsApp
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Pied de page -->
+  <footer>
+    <p>&copy; 2026 SPRINTER CAR Location de Voitures. Tous droits réservés.</p>
+  </footer>
+
+  <script src="stagejs.js"></script>
+</body>
+</html>
